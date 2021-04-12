@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="es.itrafa.ad.ud4.t1">
+<!-- 	EMPNO    NUMBER(4) NOT NULL,
+	ENAME    VARCHAR2(10)  ,
+	JOB      VARCHAR2(9)  ,
+	MGR      NUMBER(4) ,
+	HIREDATE DATE      ,
+	SAL      NUMBER(7,2),
+	COMM     NUMBER(7,2),
+	DEPTNO   NUMBER(2) NOT NULL, -->
+	<class name="Empleado"
+	table="EMP">
+		<id name="empno" type="int" column = "EMPNO"/>
+		<property name="ename" type="string" column="ENAME" length="10" />
+		<property name="job" type="string" column="JOB" length="9" />
+		<property name="mgr" type="int" column="MGR" length="10" />
+		<property name="hiredate" type="Date" column="HIREDATE"  />
+		<property name="sal" type="double" column="SAL" length="10" />
+		<property name="comm" type="double" column="COMM" length="10" />
+		<property name="deptno" type="int" column="DEPTNO" length="2" />
+	</class>
+</hibernate-mapping>

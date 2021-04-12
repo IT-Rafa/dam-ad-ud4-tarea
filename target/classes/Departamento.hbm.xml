@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="es.itrafa.ad.ud4.t1.Departamento" table="DEPT">
+		<!-- 	valor de name = valor field, pero primera en mayuscula para
+	que sea localizado a través de getter/setter	 -->
+		<id name="Deptno" type="int">
+			<column name="DEPTNO" precision="2" scale="0" />
+		</id>
+		<property name="Dname" type="string">
+			<column name="DNAME" length="14" />
+		</property>
+		<property name="Loc" type="string">
+			<column name="LOC" length="13" />
+		</property>
+	</class>
+</hibernate-mapping>

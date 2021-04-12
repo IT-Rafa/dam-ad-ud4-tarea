@@ -1,0 +1,16 @@
+database:
+    image: itrafa/oracle_18.4.0_xe:OracleDB_18.4.0_XE
+
+    container_name: oracle_db_18xe_init
+
+    ports:
+      - 1521:1521
+      - 5500:5500
+
+    environment: 
+      - ORACLE_PWD=abc1234
+
+    volumes:
+      - ./config_db/init:/opt/oracle/scripts/setup
+      - ./config_db/sql-scripts:/myscripts
+   
