@@ -18,31 +18,13 @@ public class Departamento extends DBEntity  {
 	// ATRIBUTOS
 	private static final Logger log = LogManager.getLogger(Departamento.class);
 
-
 	private int deptno; // DEPTNO: nº departamento
 	private String dname; // DNAME: nombre departamento
 	private String loc; // LOC: localización
 
-	// CONSTRUCTORES
-	/**
-	 * Contructor con todos los campos.
-	 */
-	public Departamento(int deptno, String dname, String loc) {
-		log.trace("Creando objeto Departamento");
-		this.deptno = deptno;
-		this.dname = dname;
-		this.loc = loc;
-	}
-	// GETTER / SETTER
 
-	// OTROS MÉTODOS
-
-	@Override
-	public String toString() {
-		return "Departamento{" + "deptno=" + deptno + ", dname=" + dname + ", loc=" + loc + '}';
-	}
-
-	public int getDeptno() {
+	 // GETTER & SETTER
+	 public int getDeptno() {
 		return deptno;
 	}
 
@@ -65,5 +47,27 @@ public class Departamento extends DBEntity  {
 	public void setLoc(String loc) {
 		this.loc = loc;
 	}
+
+
+	// CONSTRUCTORES
+	/**
+	 * Contructor con todos los campos.
+	 */
+	public Departamento(int deptno, String dname, String loc) {
+		log.trace("Creando objeto Departamento");
+		this.deptno = deptno;
+		this.dname = dname;
+		this.loc = loc;
+	}
+	// GETTER / SETTER
+
+	// OTROS MÉTODOS
+
+	@Override
+	public String toString() {
+		return "Departamento{" + "deptno=" + deptno + ", dname=" + dname + ", loc=" + loc + '}';
+	}
+
+
 
 }

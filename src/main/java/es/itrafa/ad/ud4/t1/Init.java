@@ -5,6 +5,8 @@
  */
 package es.itrafa.ad.ud4.t1;
 
+import java.time.LocalDate;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,25 +50,27 @@ public class Init {
 		 * Empleado y llamamos al método de su clase abstracta para guardarlo en la base
 		 * de datos
 		 */
-
-		// Crea empleado
-
 		Departamento d = new Departamento(50, "RRHH", "L.A.");
 		d.save();
 		d.delete();
 
-		Empleado e = new Empleado(8000, "Prueba Prueba Prueba", "SALESMAN", 7698, "20/02/1981", 2000.20, 200.20, 30);
-		e.save();
-		e.delete();
+		// Crea empleado
+		Empleado e = new Empleado(8000, "Paco", "SALESMAN", 7698, LocalDate.of(2000, 10, 1), 2000.20, 200.20, 30);
 
 		// Guarda empleado en base de datos
+		e.save();
 
 		// borra empleado recién creado
+		e.delete();
+
 
 		/*
-		 * 4. Obtener un listado sobre las tablas EMP y DEPT que visualize empno, ename,
-		 * dname y loc. -
+		 * 4. Obtener un listado sobre las tablas EMP y DEPT que visualize 
+		 * empno, ename, dname y loc. -
 		 */
+
+		Query consulta = sesion.createSQLQuery("SELECT * from Medallas where codDeportista =:codDeportista");
+		consulta.setParameter("codDeportista", codDeportista);
 		/*
 		 * 5. Redactar un documento donde se explique el proceso seguido para la
 		 * realización de la práctica. -

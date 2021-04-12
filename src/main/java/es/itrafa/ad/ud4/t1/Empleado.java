@@ -8,9 +8,7 @@ package es.itrafa.ad.ud4.t1;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.Console;
-import java.sql.Date;
-import java.time.format.DateTimeFormatter;
-
+import java.time.LocalDate;
 import javax.persistence.*;
 
 /**
@@ -25,80 +23,14 @@ public class Empleado extends DBEntity {
 	// ATRIBUTOS
 	private static final Logger log = LogManager.getLogger(Empleado.class);
 
-	@Id
-	@Column(name = "EMPNO")
 	private int empno; // EMPNO: nº empleado
-
-	@Column(name = "ENAME")
 	private String ename; // ENAME: nombre empleado
-
-	@Column(name = "JOB")
 	private String job; // JOB: trabajo
-
-	@Column(name = "MGR")
 	private int mgr; // MGR: nº empleado responsable
-
-	@Column(name = "HIREDATE")
-	private Date hiredate; // HIREDATE:(DATE) fecha contrato
-	DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
-    String formattedDate = myDateObj.format(myFormatObj);
-	@Column(name = "SAL", columnDefinition="Decimal(7,2)")
+	private LocalDate hiredate; // HIREDATE:(DATE) fecha contrato
 	private double sal; // SAL: salario
-
-	@Column(name = "COMM", columnDefinition="Decimal(7,2)")
 	private double comm; // COMM: comisión
-
-	@Column(name = "DEPTNO")
 	private int deptno; // DEPTNO: nº departamento
-
-	// CONSTRUCTORES
-
-	/**
-	 * Contructor dato de prueba
-	 */
-
-	public Empleado() {
-		log.trace("Creando objeto Empleado - Datos por consola");
-
-
-		Console input = System.console();
-		if (input != null) {
-
-			setEmpno(Integer.parseInt(input.readLine("Número de empleado (8000): ")));
-			setEname(input.readLine("Nombre de empleado (Paco Paco Paco): "));
-
-			setJob(input.readLine("Tipo de trabajo ('SALESMAN'): "));
-
-			setMgr(Integer.parseInt(input.readLine("Nº del responsable: (8000) ")));
-
-			int year;
-			int month;
-			int day;
-			setHiredate(new Date(year, month, day));
-
-			setSal(Double.parseDouble(input.readLine("Salario: (3000.5)")));
-
-			setComm(Double.parseDouble(input.readLine("Comisión:1000,7 ")));
-
-			setDeptno(Integer.parseInt(input.readLine("Nº de departamento: (30)")));
-
-		}
-	}
-
-	public Empleado(int empno, String ename, String job, int mgr, Date hiredate, double sal, double comm,
-			int deptno) {
-				log.trace("Creando objeto Empleado - Datos como parámetros");
-
-		setEmpno(empno);
-		setEname(ename);
-		setJob(job);
-		setMgr(mgr);
-		setHiredate(hiredate);
-		setSal(sal);
-		setComm(comm);
-		setDeptno(deptno);
-	}
 
 	// GETTERS / SETTERS
 	public int getEmpno() {
@@ -133,11 +65,11 @@ public class Empleado extends DBEntity {
 		this.mgr = mgr;
 	}
 
-	public Date getHiredate() {
+	public LocalDate getHiredate() {
 		return hiredate;
 	}
 
-	public void setHiredate( Date hiredate) {
+	public void setHiredate( LocalDate hiredate) {
 		this.hiredate = hiredate;
 	}
 
@@ -164,6 +96,56 @@ public class Empleado extends DBEntity {
 	public void setDeptno(int deptno) {
 		this.deptno = deptno;
 	}
+
+
+	// CONSTRUCTORES
+
+	/**
+	 * Contructor dato de prueba
+	 */
+
+	public Empleado() {
+		log.trace("Creando objeto Empleado - Datos por consola");
+
+
+		Console input = System.console();
+		if (input != null) {
+
+			setEmpno(Integer.parseInt(input.readLine("Número de empleado (8000): ")));
+			setEname(input.readLine("Nombre de empleado (Paco Paco Paco): "));
+
+			setJob(input.readLine("Tipo de trabajo ('SALESMAN'): "));
+
+			setMgr(Integer.parseInt(input.readLine("Nº del responsable: (8000) ")));
+
+			int year = Integer.parseInt(input.readLine("Día(20): "));
+			int month = Integer.parseInt(input.readLine("Mes(10): "));
+			int dayOfMonth = Integer.parseInt(input.readLine("Año(2000): "));
+			setHiredate(LocalDate.of(year, month, dayOfMonth));
+
+			setSal(Double.parseDouble(input.readLine("Salario: (3000.5)")));
+
+			setComm(Double.parseDouble(input.readLine("Comisión:1000,7 ")));
+
+			setDeptno(Integer.parseInt(input.readLine("Nº de departamento: (30)")));
+
+		}
+	}
+
+	public Empleado(int empno, String ename, String job, int mgr, LocalDate hiredate, double sal, double comm,
+			int deptno) {
+				log.trace("Creando objeto Empleado - Datos como parámetros");
+
+		setEmpno(empno);
+		setEname(ename);
+		setJob(job);
+		setMgr(mgr);
+		setHiredate(hiredate);
+		setSal(sal);
+		setComm(comm);
+		setDeptno(deptno);
+	}
+
 
 	// OTROS MÉTODOS
 	@Override

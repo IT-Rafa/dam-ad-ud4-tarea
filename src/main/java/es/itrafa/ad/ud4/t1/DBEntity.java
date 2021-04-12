@@ -19,7 +19,7 @@ abstract class DBEntity {
 		try {
 			log.trace("Iniciando transacción con base datos");
 			tx = session.beginTransaction();
-			log.info("Almacenando Objeto: {}", className );
+			log.trace("Guardando Objeto: {}", className );
 			session.save(this);
 			tx.commit();
 
@@ -34,18 +34,18 @@ abstract class DBEntity {
 			log.trace("Fin sesión en base datos");
 			session.close();
 		}
-		log.info("Almacenado {} en base de datos", className);
+		log.trace("Guardado {} en base de datos", className);
 	}
 
 	public void delete() {
-		log.info("Iniciando sesión en base datos");
+		log.trace("Iniciando sesión en base datos");
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = null;
 
 		try {
-			log.info("Iniciando comunicación con base datos");
+			log.trace("Iniciando comunicación con base datos");
 			tx = session.beginTransaction();
-			log.info("Eliminando {} de base datos", className);
+			log.trace("Eliminando {} de base datos", className);
 			session.delete(this);
 			tx.commit();
 
@@ -55,7 +55,7 @@ abstract class DBEntity {
 		} finally {
 			session.close();
 		}
-		log.info("Eliminado {} de base de datos", className);
+		log.trace("Eliminado {} de base de datos", className);
 
 	}
 }
