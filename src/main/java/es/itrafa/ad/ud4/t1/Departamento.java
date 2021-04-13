@@ -5,26 +5,29 @@
  */
 package es.itrafa.ad.ud4.t1;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
+
 /**
  * Representa tabla EMP
  *
  * @author rafa
  */
 
-public class Departamento extends DBEntity  {
+public class Departamento extends DBEntity {
 
 	// ATRIBUTOS
-	private static final Logger log = LogManager.getLogger(Departamento.class);
+	private static final Logger LOG = LogManager.getLogger(Departamento.class);
 
 	private int deptno; // DEPTNO: nº departamento
 	private String dname; // DNAME: nombre departamento
 	private String loc; // LOC: localización
 
-
-	 // GETTER & SETTER
-	 public int getDeptno() {
+	// GETTER & SETTER
+	public int getDeptno() {
 		return deptno;
 	}
 
@@ -48,13 +51,14 @@ public class Departamento extends DBEntity  {
 		this.loc = loc;
 	}
 
-
 	// CONSTRUCTORES
 	/**
 	 * Contructor con todos los campos.
 	 */
+	public Departamento() {	}
+	
 	public Departamento(int deptno, String dname, String loc) {
-		log.trace("Creando objeto Departamento");
+		LOG.trace("Creando objeto Departamento");
 		this.deptno = deptno;
 		this.dname = dname;
 		this.loc = loc;
@@ -68,6 +72,27 @@ public class Departamento extends DBEntity  {
 		return "Departamento{" + "deptno=" + deptno + ", dname=" + dname + ", loc=" + loc + '}';
 	}
 
+	public static List<Departamento> getAll() {
+		
 
+		List<Departamento> deptList = null;
+
+
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		try {
+			LOG.trace("Iniciando transacción con base datos");
+			LOG.trace("CONSULTA");
+			deptList =  session.createNativeQuery("SELECT * FROM DEPT", Departamento.class).list();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			LOG.trace("Fin sesión en base datos");
+			session.close();
+		}
+		LOG.trace("FIN CONSULTA");
+		return deptList;
+	}
 
 }

@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
-	private static final Logger Log = LogManager.getLogger(HibernateUtil.class);
+	private static final Logger LOG = LogManager.getLogger(HibernateUtil.class);
 	private static final SessionFactory SF = buildSessionFactory();
 
 	private HibernateUtil() {
@@ -16,13 +16,13 @@ public class HibernateUtil {
 
 	private static SessionFactory buildSessionFactory() {
 		try {
-			Log.trace("Accediendo a base de datos");
+			LOG.trace("Accediendo a base de datos");
 			return new Configuration().configure().buildSessionFactory();
 
 		} catch (HibernateException ex) {
 
-			Log.error("Fallo en Aacceso a base de datos");
-			Log.error(ex.getLocalizedMessage());
+			LOG.error("Fallo en Aacceso a base de datos");
+			LOG.error(ex.getLocalizedMessage());
 			throw new ExceptionInInitializerError();
 		}
 	}
@@ -32,7 +32,7 @@ public class HibernateUtil {
 	}
 
 	public static void closeSessionFactory() {
-		Log.trace("Cerrando acceso a base de datos");
+		LOG.trace("Cerrando acceso a base de datos");
 		SF.close();
 	}
 

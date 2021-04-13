@@ -68,9 +68,9 @@ public class Init {
 		 * 4. Obtener un listado sobre las tablas EMP y DEPT que visualize 
 		 * empno, ename, dname y loc. -
 		 */
+		Departamento.getAll();
 
-		Query consulta = sesion.createSQLQuery("SELECT * from Medallas where codDeportista =:codDeportista");
-		consulta.setParameter("codDeportista", codDeportista);
+
 		/*
 		 * 5. Redactar un documento donde se explique el proceso seguido para la
 		 * realización de la práctica. -

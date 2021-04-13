@@ -7,45 +7,53 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.*;
 
+
 abstract class DBEntity {
-	private static final Logger log = LogManager.getLogger(DBEntity.class);
+	private static final Logger LOG = LogManager.getLogger(DBEntity.class);
 	private  String className = this.getClass().getSimpleName();
 
+
+	protected Session initSession() {
+		LOG.trace("Iniciando sesión en base datos");
+		return HibernateUtil.getSessionFactory().openSession();
+	}
+
+
 	public void save() {
-		log.trace("Iniciando sesión en base datos");
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = initSession();
 		Transaction tx = null;
 
 		try {
-			log.trace("Iniciando transacción con base datos");
+			LOG.trace("Iniciando transacción con base datos");
 			tx = session.beginTransaction();
-			log.trace("Guardando Objeto: {}", className );
+			LOG.trace("Guardando Objeto: {}", className );
 			session.save(this);
 			tx.commit();
 
 		} catch (ConstraintViolationException constException) {
-			log.error("No se respeta la restricción");
-			log.error(constException.getLocalizedMessage());
+			LOG.error("No se respeta la restricción");
+			LOG.error(constException.getLocalizedMessage());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		} finally {
-			log.trace("Fin sesión en base datos");
+			LOG.trace("Fin sesión en base datos");
 			session.close();
 		}
-		log.trace("Guardado {} en base de datos", className);
+		LOG.trace("Guardado {} en base de datos", className);
 	}
 
+
+
 	public void delete() {
-		log.trace("Iniciando sesión en base datos");
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = initSession();
 		Transaction tx = null;
 
 		try {
-			log.trace("Iniciando comunicación con base datos");
+			LOG.trace("Iniciando comunicación con base datos");
 			tx = session.beginTransaction();
-			log.trace("Eliminando {} de base datos", className);
+			LOG.trace("Eliminando {} de base datos", className);
 			session.delete(this);
 			tx.commit();
 
@@ -55,7 +63,8 @@ abstract class DBEntity {
 		} finally {
 			session.close();
 		}
-		log.trace("Eliminado {} de base de datos", className);
+		LOG.trace("Eliminado {} de base de datos", className);
 
 	}
+
 }

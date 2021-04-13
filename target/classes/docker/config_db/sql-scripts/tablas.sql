@@ -1,5 +1,6 @@
-alter session set nls_date_format='dd/mm/yyyy hh24:mi:ss';
 -- Evita ORA-01843: not a valid month
+alter session set nls_date_format='dd/mm/yyyy hh24:mi:ss';
+
 
 CREATE TABLE DEPT(
  DEPTNO   NUMBER(2) NOT NULL,
