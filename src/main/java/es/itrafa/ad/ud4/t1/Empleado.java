@@ -7,9 +7,10 @@ package es.itrafa.ad.ud4.t1;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.io.Console;
 import java.time.LocalDate;
 import javax.persistence.*;
+import org.hibernate.Session;
+import java.util.List;
 
 /**
  * Representa tabla EMP
@@ -21,15 +22,15 @@ import javax.persistence.*;
 public class Empleado extends DBEntity {
 
 	// ATRIBUTOS
-	private static final Logger log = LogManager.getLogger(Empleado.class);
+	private static final Logger LOG = LogManager.getLogger(Empleado.class);
 
 	private int empno; // EMPNO: nº empleado
 	private String ename; // ENAME: nombre empleado
 	private String job; // JOB: trabajo
-	private int mgr; // MGR: nº empleado responsable
+	private Integer mgr; // MGR: nº empleado responsable
 	private LocalDate hiredate; // HIREDATE:(DATE) fecha contrato
-	private double sal; // SAL: salario
-	private double comm; // COMM: comisión
+	private Double sal; // SAL: salario
+	private Double comm; // COMM: comisión
 	private int deptno; // DEPTNO: nº departamento
 
 	// GETTERS / SETTERS
@@ -57,11 +58,11 @@ public class Empleado extends DBEntity {
 		this.job = job;
 	}
 
-	public int getMgr() {
+	public Integer getMgr() {
 		return mgr;
 	}
 
-	public void setMgr(int mgr) {
+	public void setMgr(Integer mgr) {
 		this.mgr = mgr;
 	}
 
@@ -69,23 +70,23 @@ public class Empleado extends DBEntity {
 		return hiredate;
 	}
 
-	public void setHiredate( LocalDate hiredate) {
+	public void setHiredate(LocalDate hiredate) {
 		this.hiredate = hiredate;
 	}
 
-	public double getSal() {
+	public Double getSal() {
 		return sal;
 	}
 
-	public void setSal(double sal) {
+	public void setSal(Double sal) {
 		this.sal = sal;
 	}
 
-	public double getComm() {
+	public Double getComm() {
 		return comm;
 	}
 
-	public void setComm(double comm) {
+	public void setComm(Double comm) {
 		this.comm = comm;
 	}
 
@@ -97,44 +98,17 @@ public class Empleado extends DBEntity {
 		this.deptno = deptno;
 	}
 
-
 	// CONSTRUCTORES
 
 	/**
 	 * Contructor dato de prueba
 	 */
 
-	public Empleado() {
-		log.trace("Creando objeto Empleado - Datos por consola");
-
-
-		Console input = System.console();
-		if (input != null) {
-
-			setEmpno(Integer.parseInt(input.readLine("Número de empleado (8000): ")));
-			setEname(input.readLine("Nombre de empleado (Paco Paco Paco): "));
-
-			setJob(input.readLine("Tipo de trabajo ('SALESMAN'): "));
-
-			setMgr(Integer.parseInt(input.readLine("Nº del responsable: (8000) ")));
-
-			int year = Integer.parseInt(input.readLine("Día(20): "));
-			int month = Integer.parseInt(input.readLine("Mes(10): "));
-			int dayOfMonth = Integer.parseInt(input.readLine("Año(2000): "));
-			setHiredate(LocalDate.of(year, month, dayOfMonth));
-
-			setSal(Double.parseDouble(input.readLine("Salario: (3000.5)")));
-
-			setComm(Double.parseDouble(input.readLine("Comisión:1000,7 ")));
-
-			setDeptno(Integer.parseInt(input.readLine("Nº de departamento: (30)")));
-
-		}
-	}
+	public Empleado() { }
+	
 
 	public Empleado(int empno, String ename, String job, int mgr, LocalDate hiredate, double sal, double comm,
 			int deptno) {
-				log.trace("Creando objeto Empleado - Datos como parámetros");
 
 		setEmpno(empno);
 		setEname(ename);
@@ -146,12 +120,33 @@ public class Empleado extends DBEntity {
 		setDeptno(deptno);
 	}
 
-
 	// OTROS MÉTODOS
 	@Override
 	public String toString() {
-		return "Empleado{" + "empno=" + empno + ", ename=" + ename + ", job=" + job + ", mgr=" + mgr + ", hiredate="
-				+ hiredate + ", sal=" + sal + ", comm=" + comm + ", deptno=" + deptno + '}';
+		return "Empleado {\n  Número       : " + empno + "\n  Nombre       : " + ename + "\n  Trabajo      : " + job
+				+ "\n  Gestor       : " + mgr + "\n  Fecha Inicio : " + hiredate + "\n  Salario      : " + sal + "\n  Comisión     : "
+				+ comm + "\n  Departamento : " + deptno + "\n}\n";
+
 	}
 
+	public static List<Empleado> getAll() {
+
+		List<Empleado> deptList = null;
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			LOG.trace("Iniciando transacción con base datos");
+			LOG.trace("Iniciando consulta");
+			deptList = session.createNativeQuery("SELECT * FROM EMP", Empleado.class).list();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			LOG.trace("Fin sesión en base datos");
+			session.close();
+		}
+		LOG.trace("Fin consulta");
+		return deptList;
+	}
 }

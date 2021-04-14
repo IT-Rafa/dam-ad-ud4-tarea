@@ -7,6 +7,12 @@
 		<id name="Deptno" type="int">
 			<column name="DEPTNO" precision="2" scale="0" />
 		</id>
+
+		<many-to-one 
+			name="Empleado" class="es.itrafa.ad.ud4.t1.Empleado" not-null="true" column="EMPNO" unique="true" cascade="all">
+		</many-to-one>
+
+
 		<property name="Dname" type="string">
 			<column name="DNAME" length="14" />
 		</property>

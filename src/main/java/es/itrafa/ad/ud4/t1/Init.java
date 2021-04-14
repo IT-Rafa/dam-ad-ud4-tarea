@@ -6,6 +6,7 @@
 package es.itrafa.ad.ud4.t1;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -68,9 +69,17 @@ public class Init {
 		 * 4. Obtener un listado sobre las tablas EMP y DEPT que visualize 
 		 * empno, ename, dname y loc. -
 		 */
-		Departamento.getAll();
+		List<Departamento> deptList = Departamento.getAll();
+		
+		if (deptList != null){
+			deptList.forEach(System.out::println);
+		}
 
-
+		List<Empleado> empList = Empleado.getAll();
+		if (empList != null){
+			empList.forEach(System.out::println);
+		}
+		
 		/*
 		 * 5. Redactar un documento donde se explique el proceso seguido para la
 		 * realización de la práctica. -

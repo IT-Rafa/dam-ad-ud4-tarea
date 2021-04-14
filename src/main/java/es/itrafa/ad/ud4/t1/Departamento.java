@@ -5,11 +5,10 @@
  */
 package es.itrafa.ad.ud4.t1;
 
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
+import java.util.List;
 
 /**
  * Representa tabla EMP
@@ -55,10 +54,10 @@ public class Departamento extends DBEntity {
 	/**
 	 * Contructor con todos los campos.
 	 */
-	public Departamento() {	}
-	
+	public Departamento() {
+	}
+
 	public Departamento(int deptno, String dname, String loc) {
-		LOG.trace("Creando objeto Departamento");
 		this.deptno = deptno;
 		this.dname = dname;
 		this.loc = loc;
@@ -69,20 +68,19 @@ public class Departamento extends DBEntity {
 
 	@Override
 	public String toString() {
-		return "Departamento{" + "deptno=" + deptno + ", dname=" + dname + ", loc=" + loc + '}';
+		return "Departamento {\n  Número       : " + deptno + "\n  Nombre       : " + dname + "\n  Localización : "
+				+ loc + "\n}\n";
 	}
 
 	public static List<Departamento> getAll() {
-		
 
 		List<Departamento> deptList = null;
 
-
-		Session session =HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			LOG.trace("Iniciando transacción con base datos");
-			LOG.trace("CONSULTA");
-			deptList =  session.createNativeQuery("SELECT * FROM DEPT", Departamento.class).list();
+			LOG.trace("Iniciando consulta");
+			deptList = session.createNativeQuery("SELECT * FROM DEPT", Departamento.class).list();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,7 +89,7 @@ public class Departamento extends DBEntity {
 			LOG.trace("Fin sesión en base datos");
 			session.close();
 		}
-		LOG.trace("FIN CONSULTA");
+		LOG.trace("Fin consulta");
 		return deptList;
 	}
 
